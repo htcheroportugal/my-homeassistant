@@ -1,0 +1,36 @@
+#groups
+group:
+  my_lights:
+    name: All Lights
+    entities:
+      - light.gateway_light_f0b4299aed85
+      - light.yeelight_rgb_f0b429b7deef
+      - light.yeelight_white_f0b4299562f7
+  my_transmission:
+    name: Transmission
+    entities:
+      - sensor.transmission_status
+      - sensor.transmission_down_speed
+      - sensor.transmission_up_speed
+      - switch.transmission_turtle_mode
+
+  my_internet:
+    name: Internet speed
+    entities:
+      - sensor.speedtest_ping
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+
+  my_orangepi0:
+    name: My System Monitor
+    entities:
+      - sensor.cpu_use
+      - sensor.cpu_speed
+      - sensor.average_load_5m
+      - sensor.cpu_temperature
+      - sensor.ram_free
+      - sensor.ipv4_address_wlan0
+      - sensor.disk_use_home
+      - sensor.ipv4_address
+      - sensor.since_last_boot
+      - sensor.last_boot

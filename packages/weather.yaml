@@ -1,0 +1,27 @@
+sensor:
+  - platform: yr
+    name: Weather
+    forecast: 24
+    monitored_conditions:
+      - temperature
+      - symbol
+      - precipitation
+      - windSpeed
+      #- pressure
+      - windDirection
+      - humidity
+      - fog
+      - cloudiness
+      #- dewpointTemperature
+group:
+  weather:
+   name: Weather
+   entities:
+      - sensor.weather_symbol
+      - sensor.weather_temperature
+      - sensor.weather_humidity
+      - sensor.weather_precipitation
+      - sensor.weather_wind_speed
+      - sensor.weather_wind_direction
+      - sensor.weather_cloudiness
+      - sensor.weather_fog

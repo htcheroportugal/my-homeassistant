@@ -1,0 +1,74 @@
+automation:
+  - alias: Rogerio
+    trigger:
+      - platform: state
+        entity_id: device_tracker.rogeriophone
+        from: 'not_home'
+        to: 'home'
+    action:
+      - service: notify.my_pushbullet
+        data:
+          message: "I´m home"
+  - alias: Mara
+    trigger:
+      - platform: state
+        entity_id: device_tracker.maraphone
+        from: 'not_home'
+        to: 'home'
+    action:
+      - service: notify.my_pushbullet
+        data:
+          message: "Mara is home"
+  - alias: Dora
+    trigger:
+      - platform: state
+        entity_id: device_tracker.doraphone
+        from: 'not_home'
+        to: 'home'
+    action:
+      - service: notify.my_pushbullet
+        data:
+          message: "Dora is home"
+  - alias: Mae
+    trigger:
+      - platform: state
+        entity_id: device_tracker.gracaphone
+        from: 'not_home'
+        to: 'home'
+    action:
+      - service: notify.my_pushbullet
+        data:
+          message: "Mom is home"
+  - alias: 'Play dog barking'
+    trigger:
+      platform: state
+      entity_id: device_tracker.gracaphone
+      to: 'home'
+    action:
+      service: media_player.play_media
+      data:
+        entity_id: media_player.opi0
+        media_content_id: /local/sounds/Dog-barking-nervous.mp3
+        media_content_type: 'music'
+
+  - alias: 'Play xiaomi sounds'
+    trigger:
+      platform: state
+      entity_id: device_tracker.gracaphone
+      to: 'home'
+    action:
+      service: media_player.play_media
+      data:
+        gw_mac: !secret xiaomi_mac
+        ringtone_id: 8
+        ringtone_vol: 10
+
+
+  #   dog_barking:
+  # - alias: 'Dog Barking'
+  #   sequence:
+  #     - service: media_player.play_media
+  #       data:
+  #         entity_id: media_player.opi0
+  #         media_content_id: /local/sounds/Dog-barking-nervous.mp3
+  #         media_content_type: 'music'

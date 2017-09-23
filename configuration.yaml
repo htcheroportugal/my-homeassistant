@@ -1,0 +1,166 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 38.58968
+  longitude: -9.082071
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 10
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Lisbon
+  customize: !include customize.yaml
+  packages: !include_dir_named packages
+
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  api_password: !secret http_password
+  server_port: !secret server_port
+  ssl_certificate: /etc/letsencrypt/live/rogeriofigueiredo.no-ip.org/fullchain.pem
+  ssl_key: /etc/letsencrypt/live/rogeriofigueiredo.no-ip.org/privkey.pem
+  base_url: !secret http_url
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Text to speech
+tts:
+  - platform: google
+
+# Mi home
+
+xiaomi:
+  gateways:
+   - mac: !secret xiaomi_mac
+     key: !secret xiaomi_key
+
+# KODI and PLEX
+media_player:
+  - platform: kodi
+    host: 192.168.1.102
+    port: 8383
+    username: !secret kodi_username
+    password: !secret kodi_password
+  - platform: plex
+    host: 192.168.1.102
+    port: 32400
+    username: !secret plex_username
+    password: !secret plex_password
+    token: !secret plex_token
+    #ssl: true
+  - platform: vlc
+    name: OPI0
+    arguments: '--alsa-audio-device=hw:0,0'
+
+#Google
+# emulated_hue:
+#   listen_port: 80
+
+#pushbullet
+notify:
+  - name: my_pushbullet
+    platform: pushbullet
+    api_key: !secret pushbullet_api
+
+#ip camera room
+camera:
+  - platform: mjpeg
+    mjpeg_url: !secret cam_url
+    username: !secret cam_username
+    password: !secret cam_password
+
+#systemmonitor
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_free
+      - type: load_5m
+      - type: since_last_boot
+      - type: last_boot
+      - type: processor_use
+      - type: ipv4_address
+        arg: wlan0
+
+  - platform: cpuspeed
+
+  - platform: command_line
+    name: CPU Temperature
+    command: 'cat /sys/class/thermal/thermal_zone0/temp'
+    unit_of_measurement: '°C'
+    value_template: '{{ value | multiply(1) }}'
+  # - platform: flexget
+  #   name: Flexget Status
+  #   host: http://rogeriofigueiredo.no-ip.org:3539
+  #   password: !secret flexget_password
+  #   tasks:
+  #     - download-series-discover
+  #     - download-movies-720p-discover
+  #     - download-movies-sd-discover
+
+#main router
+device_tracker:
+  - platform: ddwrt
+    host: 192.168.1.1
+    username: !secret router_username
+    password: !secret router_password
+    interval_seconds: 120
+    consider_home: 380
+    track_new_devices: no
+  # - platform: ddwrt
+  #   host: 192.168.1.3
+  #   username: !secret router_username
+  #   password: !secret router_password
+  #   interval_seconds: 20
+  #   consider_home: 380
+  #   track_new_devices: no
+
+#ifttt
+ifttt:
+  key: !secret iffft_key
+
+binary_sensor:
+ - platform: flexget
+   password: !secret flexget_password
+
+
+# Enables the frontend
+panel_iframe:
+  flexget:
+    title: 'Flexget'
+    url: !secret flexget_url
+    icon: mdi:cloud-download
+
+logger:
+  default: warning
+  logs:
+    requests.packages.urllib3.connectionpool: critical

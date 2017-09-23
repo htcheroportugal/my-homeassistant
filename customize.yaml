@@ -1,0 +1,46 @@
+sensor.humidity_158d000114322c:
+    friendly_name: My Bedroom Humi
+    icon: mdi:water-percent
+
+sensor.temperature_158d000114322c:
+    friendly_name: My Bedroom Temp
+
+sensor.temperature_158d0001178591:
+    friendly_name: Room Temp
+
+sensor.humidity_158d0001178591:
+    friendly_name: Room Humi
+    icon: mdi:water-percent
+
+sensor.illumination_f0b4299aed85:
+    friendly_name: Gateway Light Sensor
+
+switch.plug_158d0001101848:
+    friendly_name: Plug Raspi
+
+binary_sensor.switch_158d0001152507:
+    friendly_name: Button Switch
+
+binary_sensor.cube_158d000101aa4c:
+    friendly_name: Cube Xiaomi
+
+binary_sensor.door_window_sensor_158d00010e4109:
+    friendly_name: My Bedroom window
+
+binary_sensor.door_window_sensor_158d00010d579e:
+    friendly_name: Main door
+
+binary_sensor.motion_sensor_158d00010ef41a:
+    friendly_name: My bedroom sensor
+
+binary_sensor.motion_sensor_158d000101a7cc:
+    friendly_name: Hall sensor
+
+light.gateway_light_f0b4299aed85:
+    friendly_name: Gateway Light
+
+light.yeelight_white_f0b4299562f7:
+    friendly_name: Stairs Light
+
+light.yeelight_rgb_f0b429b7deef:
+    friendly_name: My bedroom Light

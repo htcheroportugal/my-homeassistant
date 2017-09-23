@@ -1,0 +1,39 @@
+automation:
+  #turn on hall after 20 PM with movement
+  - alias: Turn on hall light after 20 PM with movement
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.motion_sensor_158d000101a7cc
+        to: 'on'
+    condition:
+      - condition: time
+        after: '20:00:00'
+        before: '08:00:00'
+    action:
+      - service: homeassistant.turn_on
+        data:
+          entity_id: light.gateway_light_f0b4299aed85
+          color_temp: 154
+          brightness: 255
+
+#turn off hall light when after 3 minutes was no movemnt
+  - alias: Turn off hall light no movement
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.motion_sensor_158d000101a7cc
+        to: 'off'
+        for:
+          minutes: 1
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.gateway_light_f0b4299aed85
+
+group:
+  my_hall:
+    name: Up hall
+    entities:
+      - light.gateway_light_f0b4299aed85
+      - binary_sensor.motion_sensor_158d000101a7cc
+      - sensor.illumination_f0b4299aed85

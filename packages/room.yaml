@@ -1,0 +1,7 @@
+group:
+  my_room:
+    name: Room
+    entities:
+      - switch.plug_158d0001101848
+      - sensor.humidity_158d0001178591
+      - sensor.temperature_158d0001178591

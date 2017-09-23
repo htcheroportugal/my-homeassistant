@@ -1,0 +1,27 @@
+mara-phone:
+  name: Mara Lúcia
+  mac: 20:82:C0:8C:4C:12
+  picture: /local/images/mara-icon.jpg
+  track: yes
+  hide_if_away: no
+
+rogerio-phone:
+  name: Rogério Figueiredo
+  mac: 00:0a:f5:e9:c0:d8
+  picture: https://scontent.flis1-1.fna.fbcdn.net/v/t1.0-9/19366435_1569024269794712_4193236738437295855_n.jpg?oh=1896239804db65b922ae64461014eba6&oe=5A57428F
+  track: yes
+  hide_if_away: no
+
+graca-phone:
+  name: Maria Fernandes
+  mac: 28:CF:DA:9F:AD:F7
+  picture: /local/images/graca-icon.jpg
+  track: yes
+  hide_if_away: no
+
+dora-phone:
+  name: Dora Rato
+  mac: 84:73:03:51:CF:8C
+  picture: /local/images/dora-icon.jpg
+  track: yes
+  hide_if_away: no

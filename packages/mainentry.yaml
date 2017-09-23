@@ -1,0 +1,7 @@
+group:
+  my_entry_hall:
+    name: Entry hall
+    entities:
+      - light.yeelight_white_f0b4299562f7
+      - binary_sensor.door_window_sensor_158d00010d579e
+      - binary_sensor.switch_158d0001152507

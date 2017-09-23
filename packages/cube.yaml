@@ -1,0 +1,35 @@
+automation:
+- alias: Turn off automation my bedroom
+  initial_state: on
+  trigger:
+     platform: event
+     event_type: cube_action
+     event_data:
+         entity_id: binary_sensor.cube_158d000101aa4c
+         action_type: flip90
+  action:
+    - service: homeassistant.turn_off
+      data:
+        entity_id: automation.turn_on_bedroom_light_after_00_pm_with_movement
+    - service: homeassistant.turn_off
+      data:
+        entity_id: automation.turn_on_bedroom_light_after_20_pm_with_movement
+    - service: light.turn_off
+      data:
+        entity_id: light.yeelight_rgb_f0b429b7deef
+
+- alias: Turn on automation my bedroom
+  initial_state: on
+  trigger:
+     platform: event
+     event_type: cube_action
+     event_data:
+         entity_id: binary_sensor.cube_158d000101aa4c
+         action_type: flip180
+  action:
+    - service: homeassistant.turn_on
+      data:
+        entity_id: automation.turn_on_bedroom_light_after_00_pm_with_movement
+    - service: homeassistant.turn_on
+      data:
+        entity_id: automation.turn_on_bedroom_light_after_20_pm_with_movement

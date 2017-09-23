@@ -1,0 +1,17 @@
+#transmission monitor
+sensor:
+  - platform: transmission
+    host: 192.168.1.102
+    username: pi
+    password: raspberry
+    monitored_variables:
+      - 'current_status'
+      - 'download_speed'
+      - 'upload_speed'
+
+#transmission switch
+switch:
+  platform: transmission
+  host: 192.168.1.102
+  username: pi
+  password: raspberry

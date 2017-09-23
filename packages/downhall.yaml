@@ -1,0 +1,62 @@
+automation:
+  #turn on hall light after 20 PM when dor open
+  - alias: Turn on hall and stairs light after 20 PM when dor open
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.door_window_sensor_158d00010d579e
+        to: 'on'
+    condition:
+      - condition: time
+        after: '20:00:00'
+        before: '08:00:00'
+    action:
+      - service: homeassistant.turn_on
+        data:
+          entity_id: light.gateway_light_f0b4299aed85
+          color_temp: 154
+          brightness: 100
+
+  #turn on hall light and stairs light after 20 PM when dor open
+  - alias: Turn on stairs light after 20 PM when dor open
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.door_window_sensor_158d00010d579e
+        to: 'on'
+    condition:
+      - condition: time
+        after: '20:00:00'
+        before: '08:00:00'
+    action:
+      - service: homeassistant.turn_on
+        data:
+          entity_id: light.yeelight_white_f0b4299562f7
+          color_temp: 154
+          brightness: 100
+
+#turn off hall light 4 min after door closes
+  - alias: Turn off hall light 2 min after door closes
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.door_window_sensor_158d00010d579e
+        to: 'off'
+        for:
+          minutes: 4
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.gateway_light_f0b4299aed85
+
+#turn off stairs light 2 min after door closes
+  - alias: Turn off stairs light 2 min after door closes
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.door_window_sensor_158d00010d579e
+        to: 'off'
+        for:
+          minutes: 2
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.yeelight_white_f0b4299562f7
