@@ -1,0 +1,233 @@
+
+###################################################################################################
+###################################################################################################
+##  Input Boolean
+###################################################################################################
+###################################################################################################
+homeassistant:
+  customize:
+    input_boolean.lastmsg:
+      friendly_name: 'Repeat Message'
+      icon: mdi:repeat-once
+      emulated_hue: True
+      hidden: False
+
+
+
+
+
+
+###################################################################################################
+###################################################################################################
+##  Input Boolean
+###################################################################################################
+###################################################################################################
+input_boolean:
+  lastmsg:
+    name: Last Message
+    initial: off
+################################################################################################################
+################################################################################################################
+##  Senors stuff
+################################################################################################################
+################################################################################################################
+sensor:
+###############Alarm Stuff
+  - platform: template
+    sensors:
+      alarm_status:
+        friendly_name: 'Alarm Mode'
+        value_template: "{{ 'Armed' if is_state('input_boolean.alarm_mode', 'on') else 'Disarmed' }}"
+
+  - platform: mqtt
+    state_topic: "polly/lastmsg"
+    name: "Last Message"
+
+        
+###############Climate Stuff
+  - platform: template
+    sensors:
+      climate_fan_state:
+        friendly_name: "Climate Fan State"
+        value_template: "{{ (states.climate.walters.attributes|default({})).fan_mode|default('unknown') }}"
+  - platform: template
+    sensors:
+      climate_operation_mode:
+        friendly_name: "Climate operation Mode"
+        value_template: "{{ (states.climate.walters.attributes|default({})).operation_mode|default('unknown') }}"
+  - platform: template
+    sensors:
+      climate_current_temperature:
+        friendly_name: "Climate Current Temperature"
+        value_template: "{{ (states.climate.walters.attributes|default({})).current_temperature|default('unknown') }}"
+  - platform: template
+    sensors:
+      climate_away_mode:
+        friendly_name: "Climate Away Mode"
+        value_template: "{{ (states.climate.walters.attributes|default({})).away_mode|default('unknown') }}"
+  - platform: template
+    sensors:
+      climate_temperature:
+        friendly_name: "Climate Temperature"
+        value_template: "{{ (states.climate.walters.attributes|default({})).temperature|default('unknown') }}"
+  - platform: template
+    sensors:
+      climate_operation_mode_heat:
+        value_template: "{{ 'heat' in states.climate.walters.attributes.operation_mode }}"
+
+#
+
+
+
+camera:
+  - platform: generic
+    still_image_url: 'http://images.intellicast.com/WxImages/RadarLoop/pie_None_anim.gif'
+    name: Doppler Weather
+  - platform: mjpeg
+    mjpeg_url: http://192.168.0.160/cgi/jpg/image.cgi
+    name: front porch Cam
+    username: admin
+    password: password
+
+################################################################################################################
+################################################################################################################
+##  Automation stuff
+################################################################################################################
+################################################################################################################
+automation:
+  - alias: Reset Panel Alarm Status on reboot
+    initial_state: true
+    hide_entity: false
+    trigger:
+      platform: homeassistant
+      event: start
+    action:
+      - service_template: >
+          {% if states('alarm_control_panel.home_alarm') == 'armed_home' %}
+            input_boolean.turn_on
+          {% elif states('alarm_control_panel.home_alarm') == 'armed_away' %}
+            input_boolean.turn_on
+          {% else %}
+            input_boolean.turn_off
+          {% endif %}
+        entity_id: input_boolean.alarm_mode
+
+
+
+  - alias: Panel Alarm Status Armed
+    trigger:
+      - platform: state
+        entity_id: alarm_control_panel.home_alarm
+        to: 'armed_home'
+      - platform: state
+        entity_id: alarm_control_panel.home_alarm
+        to: 'armed_away'
+    action:
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.alarm_mode
+
+  - alias: Panel Alarm Status Disarmed
+    trigger:
+      - platform: state
+        entity_id: alarm_control_panel.home_alarm
+        to: 'disarmed'
+    action:
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.alarm_mode
+
+  - alias: 'Repeat Last Message'
+    trigger:
+      - platform: state
+        entity_id: input_boolean.lastmsg
+        to: 'on'
+    action:
+      - service: script.speech_engine
+
+
+#####################################################################
+### Group
+#####################################################################
+group:
+  Walters Climate:
+    entities:
+      - sensor.climate_fan_state
+      - sensor.climate_operation_mode
+      - sensor.climate_current_temperature
+      - sensor.climate_away_mode
+      - sensor.climate_temperature
+
+  Garage Door:
+    entities:
+      - sensor.garage_dr_status
+##############Lights Stuff
+
+##############Lights Stuff
+switch:
+  - platform: template
+    switches:
+      panel_ft_porch_light:
+        value_template: "{{ is_state('switch.frontporchlight', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          entity_id: switch.frontporchlight
+        turn_off:
+          service: switch.turn_on
+          entity_id: switch.frontporchlight
+  - platform: template
+    switches:
+      panel_foyer_light:
+        value_template: "{{ is_state('switch.foyerlight', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          entity_id: switch.foyerlight
+        turn_off:
+          service: switch.turn_on
+          entity_id: switch.foyerlight
+  - platform: template
+    switches:
+      panel_laundrylight:
+        value_template: "{{ is_state('switch.laundrylight', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          entity_id: switch.laundrylight
+        turn_off:
+          service: switch.turn_on
+          entity_id: switch.laundrylight
+  - platform: template
+    switches:
+      panel_kitchen_lights:
+        value_template: "{{ is_state('switch.kitchen_left_light', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          entity_id: switch.kitchen_left_light
+        turn_off:
+          service: switch.turn_on
+          entity_id: switch.kitchen_left_light
+  - platform: template
+    switches:
+      panel_driveway_light:
+        value_template: "{{ is_state('switch.driveway_light', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          entity_id: switch.driveway_light
+        turn_off:
+          service: switch.turn_on
+          entity_id: switch.driveway_light
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

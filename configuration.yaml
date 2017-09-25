@@ -164,3 +164,10 @@ logger:
   default: warning
   logs:
     requests.packages.urllib3.connectionpool: critical
+
+# panel_custom:
+#   - name: floorplan
+#     sidebar_title: Floorplan
+#     sidebar_icon: mdi:home
+#     url_path: floorplan
+#     config: !include panel_floorplan.yaml
