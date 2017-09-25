@@ -49,9 +49,48 @@ history:
       - media_player.kodi
       - group.my_orangepi0
       - group.my_internet
+      - sensor.cpu_use
+      - sensor.cpu_speed
+      - sensor.average_load_5m
+      - sensor.cpu_temperature
+      - sensor.ram_free
+      - sensor.ipv4_address_wlan0
+      - sensor.disk_use_home
+      - sensor.ipv4_address
+      - sensor.since_last_boot
+      - sensor.last_boot
+      - sensor.speedtest_ping
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+      - sensor.transmission_status
+      - sensor.transmission_down_speed
+      - sensor.transmission_up_speed
+      - switch.transmission_turtle_mode
 
 # View all events in a logbook
 logbook:
+  exclude:
+    entities:
+      - media_player.kodi
+      - group.my_orangepi0
+      - group.my_internet
+      - sensor.cpu_use
+      - sensor.cpu_speed
+      - sensor.average_load_5m
+      - sensor.cpu_temperature
+      - sensor.ram_free
+      - sensor.ipv4_address_wlan0
+      - sensor.disk_use_home
+      - sensor.ipv4_address
+      - sensor.since_last_boot
+      - sensor.last_boot
+      - sensor.speedtest_ping
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+      - sensor.transmission_status
+      - sensor.transmission_down_speed
+      - sensor.transmission_up_speed
+      - switch.transmission_turtle_mode
 
 # Track the sun
 sun:
@@ -80,7 +119,7 @@ media_player:
     username: !secret plex_username
     password: !secret plex_password
     token: !secret plex_token
-    #ssl: true
+    ssl: true
   - platform: vlc
     name: OPI0
     arguments: '--alsa-audio-device=hw:0,0'
@@ -94,6 +133,10 @@ notify:
   - name: my_pushbullet
     platform: pushbullet
     api_key: !secret pushbullet_api
+  # - name: my_html5
+  #   platform: group
+  #   services:
+  #     - service: html5
 
 #ip camera room
 camera:
@@ -123,14 +166,6 @@ sensor:
     command: 'cat /sys/class/thermal/thermal_zone0/temp'
     unit_of_measurement: '°C'
     value_template: '{{ value | multiply(1) }}'
-  # - platform: flexget
-  #   name: Flexget Status
-  #   host: http://rogeriofigueiredo.no-ip.org:3539
-  #   password: !secret flexget_password
-  #   tasks:
-  #     - download-series-discover
-  #     - download-movies-720p-discover
-  #     - download-movies-sd-discover
 
 #main router
 device_tracker:
@@ -154,16 +189,18 @@ ifttt:
   key: !secret iffft_key
 
 binary_sensor:
- - platform: flexget
-   password: !secret flexget_password
+  - platform: flexget
+    host: !secret flexget_url
+    ssl: False
+    password: !secret flexget_password
 
 
-# Enables the frontend
-# panel_iframe:
-#   flexget:
-#     title: 'Flexget'
-#     url: !secret flexget_url
-#     icon: mdi:cloud-download
+#Enables the frontend
+panel_iframe:
+  flexget:
+    title: 'Flexget'
+    url: !secret flexget_url
+    icon: mdi:cloud-download
 
 logger:
   default: warning
