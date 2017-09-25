@@ -44,6 +44,11 @@ conversation:
 
 # Enables support for tracking state changes over time
 history:
+  exclude:
+    entities:
+      - media_player.kodi
+      - group.my_orangepi0
+      - group.my_internet
 
 # View all events in a logbook
 logbook:
@@ -154,11 +159,11 @@ binary_sensor:
 
 
 # Enables the frontend
-panel_iframe:
-  flexget:
-    title: 'Flexget'
-    url: !secret flexget_url
-    icon: mdi:cloud-download
+# panel_iframe:
+#   flexget:
+#     title: 'Flexget'
+#     url: !secret flexget_url
+#     icon: mdi:cloud-download
 
 logger:
   default: warning
